@@ -33,7 +33,7 @@ def login():
     return render_template('login.html', error=error)
 
 
-# Here we are creating a function to disable access if the user does not login
+# Here we are creating a function to disable access if the user does not login. This restricts the user from accessing the page via the URL
 def login_required(test):
     @wraps(test)
     def wrap(*args, **kwargs):
