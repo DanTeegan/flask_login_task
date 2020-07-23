@@ -4,25 +4,36 @@
 from flask import *
 from functools import wraps
 
+# We are creating an object here called app
 app = Flask(__name__)
 
 app.secret_key = "secret key"
 
+# Here we are creating the welcome method that will take us to the first page
 @app.route("/")
-def home():
-    return render_template('home.html')
+def welcome ():
+    return render_template('welcome.html')
 
+
+# Here we loging in, We have hard coded the login information however once the CSV file is working we will use that
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+        if request.form['username'] != 'daniel' or request.form['password'] != '12345':
             error = 'Invalid Credentials. Please try again.'
+            attempt = session.get('attempt')
+            attempt -= 1
+            session['attempt'] = attempt
+            if attempt == 1:
+                flash("Last chance")
         else:
             session['logged_in'] = True
-            return redirect(url_for('welcome'))
+            return redirect(url_for('home'))
     return render_template('login.html', error=error)
 
+
+# Here we are creating a function to disable access if the user does not login
 def login_required(test):
     @wraps(test)
     def wrap(*args, **kwargs):
@@ -33,12 +44,27 @@ def login_required(test):
                 return redirect(url_for('login'))
     return wrap
 
+# Direct to home page
+@app.route("/home")
+def home():
+    return render_template('home.html')
+
+# Direct to register page
+@app.route("/register")
+def register():
+    return render_template('register.html')
+
+# Direct to quiz page
+@app.route("/quiz")
+def quiz():
+    return render_template('quiz.html')
+
+# Direct to welcome
 @app.route("/welcome")
-@login_required
-def welcome ():
-    return render_template('welcome.html')
+def back():
+    return render_template("welcome.html")
 
-
+# Logs the user out
 @app.route('/logout')
 def logout ():
     session.pop('Logged_in', None) # We use the pop method to reset the key back to the default value

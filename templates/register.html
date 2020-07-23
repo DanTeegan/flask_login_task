@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+ <body style="background-color:powderblue;">
+<input type="text" placeholder="Username" name="username" value="{{
+          request.form.username }}">
+
+<input type="password" placeholder="Password" name="password" value="{{
+          request.form.password }}">
+
+<input class="btn btn-default" type="submit" value="Register">
+
+<a href="/welcome">Back</a>
+
+</body>
+</html>
