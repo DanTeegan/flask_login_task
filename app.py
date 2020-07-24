@@ -14,23 +14,48 @@ app.secret_key = "secret key"
 def welcome ():
     return render_template('welcome.html')
 
+# Direct to home page
+@app.route("/home")
+def home():
+    session['attempt'] = 1
+    return render_template('home.html')
 
 # Here we loging in, We have hard coded the login information however once the CSV file is working we will use that
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     error = None
+#     if request.method == 'POST':
+#         if request.form['username'] != 'daniel' or request.form['password'] != '12345':
+#             error = 'Invalid Credentials. Please try again.'
+#
+#         else:
+#             session['logged_in'] = True
+#             return redirect(url_for('home'))
+#     return render_template('login.html', error=error)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
         if request.form['username'] != 'daniel' or request.form['password'] != '12345':
-            error = 'Invalid Credentials. Please try again.'
-            attempt = session.get('attempt')
-            attempt -= 1
-            session['attempt'] = attempt
-            if attempt == 1:
-                flash("Last chance")
+            attempt = int(session.get('attempt'))
+            if attempt == 2:
+                flash("This is your last chance")
+                # attempt += 1
+                # session['attempt'] = attempt
+            if attempt == 3:
+                flash('You have been logged out.')
+                abort(404)
+            else:
+                attempt += 1
+                session['attempt'] = attempt
+                error = 'Invalid Credentials. Please try again'
         else:
             session['logged_in'] = True
+            flash("You are logged in")
             return redirect(url_for('home'))
     return render_template('login.html', error=error)
+
 
 
 # Here we are creating a function to disable access if the user does not login. This restricts the user from accessing the page via the URL
@@ -44,10 +69,7 @@ def login_required(test):
                 return redirect(url_for('login'))
     return wrap
 
-# Direct to home page
-@app.route("/home")
-def home():
-    return render_template('home.html')
+
 
 # Direct to register page
 @app.route("/register")
