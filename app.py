@@ -20,19 +20,11 @@ def home():
     session['attempt'] = 1
     return render_template('home.html')
 
-# Here we loging in, We have hard coded the login information however once the CSV file is working we will use that
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     error = None
-#     if request.method == 'POST':
-#         if request.form['username'] != 'daniel' or request.form['password'] != '12345':
-#             error = 'Invalid Credentials. Please try again.'
-#
-#         else:
-#             session['logged_in'] = True
-#             return redirect(url_for('home'))
-#     return render_template('login.html', error=error)
+@app.route("/register")
+def register():
+    return render_template('register.html')
 
+# Here we loging in, We have hard coded the login information however once the CSV file is working we will use that
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -41,11 +33,9 @@ def login():
             attempt = int(session.get('attempt'))
             if attempt == 2:
                 flash("This is your last chance")
-                # attempt += 1
-                # session['attempt'] = attempt
             if attempt == 3:
                 flash('You have been logged out.')
-                abort(404)
+                return render_template("error.html")
             else:
                 attempt += 1
                 session['attempt'] = attempt
@@ -70,12 +60,6 @@ def login_required(test):
     return wrap
 
 
-
-# Direct to register page
-@app.route("/register")
-def register():
-    return render_template('register.html')
-
 # Direct to quiz page
 @app.route("/quiz")
 def quiz():
@@ -85,6 +69,10 @@ def quiz():
 @app.route("/welcome")
 def back():
     return render_template("welcome.html")
+
+@app.route("/error")
+def error_message():
+    return render_template("error.html")
 
 # Logs the user out
 @app.route('/logout')
