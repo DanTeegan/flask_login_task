@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <title>Register</title>
 </head>
- <body style="background-color:powderblue;">
+
+<body style="background-color:powderblue;">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,30 +29,29 @@
 </nav>
 
 
-    <div class="container">
-      <h1>Please register your account</h1>
-      <br>
-      <form action="" method="post">
-        <input type="text" placeholder="Username" name="username" value="{{
+<!--<div class="container">-->
+<!--  <h1>Please register your account</h1>-->
+<!--  <br>-->
+<!--  <form action="" method="post">-->
+<!--    <input type="text" placeholder="Username" name="username" value="{{-->
+<!--      request.form.username }}">-->
+<!--     <input type="password" placeholder="Password" name="password" value="{{-->
+<!--      request.form.password }}">-->
+<!--    <input class="btn btn-default" type="submit" value="Login">-->
+<!--  </form>-->
+<!--    <a href="/welcome">Back</a>-->
+
+
+
+<input type="text" placeholder="Username" name="username" value="{{
           request.form.username }}">
-         <input type="password" placeholder="Password" name="password" value="{{
+
+<input type="password" placeholder="Password" name="password" value="{{
           request.form.password }}">
-        <input class="btn btn-default" type="submit" value="Login">
-      </form>
-        <a href="/welcome">Back</a>
 
+<input class="btn btn-default" type="submit" value="Register">
 
-
-
-<!--<input type="text" placeholder="Username" name="username" value="{{-->
-<!--          request.form.username }}">-->
-
-<!--<input type="password" placeholder="Password" name="password" value="{{-->
-<!--          request.form.password }}">-->
-
-<!--<input class="btn btn-default" type="submit" value="Register">-->
-
-<!--<a href="/welcome">Back</a>-->
+<a href="/welcome">Back</a>
 
 </body>
 </html>
